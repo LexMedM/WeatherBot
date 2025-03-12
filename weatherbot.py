@@ -7,6 +7,8 @@ from datetime import datetime
 import asyncio
 from dotenv import load_dotenv
 import os
+from aiogram.client.session.aiohttp import AiohttpSession
+
 load_dotenv()
 
 
@@ -16,8 +18,10 @@ WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 if not API_TOKEN or not WEATHER_API_KEY:
     raise ValueError("Помилка: API_TOKEN або WEATHER_API_KEY не знайдені в .env!")
 # Створення об'єкта бота
-bot = Bot(token=API_TOKEN) 
-dp = Dispatcher() 
+session = AiohttpSession(proxy='http://proxy.server:3128')
+
+bot = Bot(token=API_TOKEN, session=session)
+dp = Dispatcher()
 
 # API ключ для OpenWeather
 
